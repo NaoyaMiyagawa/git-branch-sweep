@@ -1,0 +1,24 @@
+#compdef git-branch-sweep
+# zsh completion for git-branch-sweep.
+# Works both standalone (`git-branch-sweep <TAB>`) and as a git subcommand
+# (`git branch-sweep <TAB>`) — zsh's _git dispatches to this by name.
+
+local curcontext="$curcontext" state line
+typeset -A opt_args
+
+_arguments -s -S \
+  '(-n --dry-run)'{-n,--dry-run}'[classify & print only; delete nothing]' \
+  '(-y --yes)'{-y,--yes}'[delete the safe bucket without prompting]' \
+  '--all[also include the review + others buckets]' \
+  '*--protect[never touch branches matching glob (repeatable)]:branch or glob:->protect' \
+  '--no-gh[skip the GitHub PR lookup (offline / non-GitHub repo)]' \
+  '--no-fetch[skip the git fetch --prune refresh]' \
+  '(-h --help)'{-h,--help}'[show help and exit]'
+
+case $state in
+  protect)
+    local -a branches
+    branches=(${(f)"$(git for-each-ref --format='%(refname:short)' refs/heads 2>/dev/null)"})
+    _describe -t branches 'branch (or type a glob, e.g. local/*)' branches
+    ;;
+esac
