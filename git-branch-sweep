@@ -106,7 +106,7 @@ done
 if [[ -t 1 && -z "${NO_COLOR:-}" ]]; then
   BOLD=$'\e[1m'; DIM=$'\e[2m'; RED=$'\e[31m'; GRN=$'\e[32m'
   YLW=$'\e[33m'; BLU=$'\e[34m'; MAG=$'\e[35m'; CYN=$'\e[36m'
-  GRY=$'\e[90m'; RST=$'\e[0m'
+  GRY=$'\e[38;5;245m'; RST=$'\e[0m'
 else
   BOLD='' DIM='' RED='' GRN='' YLW='' BLU='' MAG='' CYN='' GRY='' RST=''
 fi
